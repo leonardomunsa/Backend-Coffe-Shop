@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
