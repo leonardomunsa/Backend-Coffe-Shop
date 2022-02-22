@@ -26,6 +26,8 @@ const loginUserService = async ({ email, password }) => {
 
   const user = await findUserModel(email);
   if (!user) throw errorHandling(notFound, "User not found");
+  if (user.password !== password)
+    throw errorHandling(conflict, "Incorrect password");
 
   const { password: _password, ...userEmail } = user;
 
