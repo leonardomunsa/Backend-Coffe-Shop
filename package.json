@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/leonardomunsa/desafio-backend#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.3",
+    "multer": "^1.4.4",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
   },
