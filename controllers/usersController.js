@@ -4,7 +4,7 @@ const {
   createUserService,
   loginUserService,
 } = require("../services/usersService");
-const { created } = require("../utils/dictionary");
+const { created, success } = require("../utils/dictionary");
 
 // middleware para rota de criação de usuários
 const createUserController = async (req, res, next) => {
@@ -28,7 +28,7 @@ const loginUserController = async (req, res, next) => {
     const token = await loginUserService({ email, password });
 
     // passando token no endpoint para ser salvo no headers de autorização
-    return res.status(created).json({ token });
+    return res.status(success).json({ token });
   } catch (error) {
     console.log(`POST LOGIN USERS -> ${error.message}`);
     next(error);
