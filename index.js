@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 app.use(router);
 
+// middleware para tratamento de erros
 app.use(errorHandler);
 
 const PORT = 3000;

@@ -6,12 +6,15 @@ const errorHandling = require("../utils/errorHandling");
 const { badRequest, conflict, notFound } = require("../utils/dictionary");
 
 const createUserService = async ({ name, email, password }) => {
+  // chamando validação do joi usando os dados passados e desestruturando erro caso exista
   const { error } = userSchema.validate({ email, password });
   if (error) throw errorHandling(badRequest, error.message);
 
+  // chamando função da camada de modelo para verificar se usuário já existe
   const user = await findUserModel(email);
   if (user) throw errorHandling(conflict, "User already exists");
 
+  // criptografando senha
   const hashPassword = md5(password);
 
   const userId = await createUserModel(name, email, hashPassword);
@@ -34,9 +37,10 @@ const loginUserService = async ({ email, password }) => {
   if (user.password !== hashPassword)
     throw errorHandling(conflict, "Incorrect password");
 
-  const { password: _password, ...userEmail } = user;
+  // retirando senha para criação de token
+  const { password: _password, ...userInfosWithoutPassword } = user;
 
-  const token = authService.generateToken(userEmail);
+  const token = authService.generateToken(userInfosWithoutPassword);
 
   return token;
 };

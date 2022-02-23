@@ -2,6 +2,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+// documento de configuração do token, com função para gerá-lo e verificá-lo
+
 const { API_SECRET } = process.env;
 
 const JWT_CONFIG = {
@@ -16,6 +18,7 @@ const verifyToken = (token) => {
     const decoded = jwt.verify(token, API_SECRET);
     const user = decoded.data;
 
+    // caso token esteja ok, info do usuário é passada para função de autenticação
     return user;
   } catch (error) {
     console.log(`FALHA NA AUTENTICAÇÃO -> ${error.message}`);
