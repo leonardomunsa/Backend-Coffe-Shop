@@ -2,7 +2,7 @@ const connection = require("./connection");
 
 const getIngredientsModel = async () => {
   const db = await connection();
-  const ingredients = await db.collection("ingredients").findAll().toArray();
+  const ingredients = await db.collection("ingredients").find().toArray();
 
   return ingredients;
 };

@@ -1,6 +1,6 @@
 const {
-  findingredientsModel,
-  createingredientsModel,
+  findIngredientModel,
+  createIngredientModel,
   getIngredientsModel,
 } = require("../models/ingredientsModel");
 const { ingredientSchema } = require("../utils/schemas");
@@ -23,10 +23,10 @@ const createIngredientsService = async ({ name, measurement, unitPrice }) => {
   });
   if (error) throw errorHandling(badRequest, error.message);
 
-  const ingredient = await findingredientsModel(name);
+  const ingredient = await findIngredientModel(name);
   if (ingredient) throw errorHandling(conflict, "Ingredient already exists");
 
-  const ingredientId = await createingredientsModel(
+  const ingredientId = await createIngredientModel(
     name,
     measurement,
     unitPrice
