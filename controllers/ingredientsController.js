@@ -1,7 +1,21 @@
 /* eslint-disable no-console */
 /* eslint-disable consistent-return */
-const { createIngredientsService } = require("../services/ingredientsService");
-const { created } = require("../utils/dictionary");
+const {
+  createIngredientsService,
+  getIngredientsService,
+} = require("../services/ingredientsService");
+const { created, success } = require("../utils/dictionary");
+
+const getIngredientsController = async (req, res, next) => {
+  try {
+    const ingredients = await getIngredientsService();
+
+    return res.status(success).json(ingredients);
+  } catch (error) {
+    console.log(`GET INGREDIENTS -> ${error.message}`);
+    next(error);
+  }
+};
 
 const createIngredientsController = async (req, res, next) => {
   try {
@@ -22,4 +36,5 @@ const createIngredientsController = async (req, res, next) => {
 
 module.exports = {
   createIngredientsController,
+  getIngredientsController,
 };
