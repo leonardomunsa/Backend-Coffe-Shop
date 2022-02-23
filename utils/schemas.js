@@ -32,8 +32,20 @@ const productSchema = Joi.object({
   ),
 });
 
+// validação de produto para rota de atualização (put)
+const productSchemaUpdate = Joi.object({
+  name: Joi.string().min(1),
+  image: Joi.string().min(1),
+  price: Joi.number().min(0.1),
+  components: Joi.object().keys({
+    ingredient: Joi.string().min(1),
+    quantity: Joi.number().min(1),
+  }),
+});
+
 module.exports = {
   userSchema,
   ingredientSchema,
   productSchema,
+  productSchemaUpdate,
 };

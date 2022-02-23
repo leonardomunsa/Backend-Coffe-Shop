@@ -4,8 +4,10 @@ const {
   createProductService,
   getProductService,
   getProductsService,
+  updateProductService,
+  deleteProductService,
 } = require("../services/productsService");
-const { created, success } = require("../utils/dictionary");
+const { created, success, noContent } = require("../utils/dictionary");
 
 const getProductController = async (req, res, next) => {
   try {
@@ -49,8 +51,42 @@ const createProductController = async (req, res, next) => {
   }
 };
 
+const updateProductController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, image, price, components } = req.body;
+
+    const productUpdated = await updateProductService(id, {
+      name,
+      image,
+      price,
+      components,
+    });
+
+    return res.status(success).json(productUpdated);
+  } catch (error) {
+    console.log(`PUT PRODUCT -> ${error.message}`);
+    next(error);
+  }
+};
+
+const deleteProductController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await deleteProductService(id);
+
+    return res.status(noContent).json();
+  } catch (error) {
+    console.log(`DELETE PRODUCT -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   getProductController,
   getProductsController,
   createProductController,
+  updateProductController,
+  deleteProductController,
 };
