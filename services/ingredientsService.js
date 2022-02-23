@@ -10,6 +10,7 @@ const { badRequest, conflict, notFound } = require("../utils/dictionary");
 const getIngredientsService = async () => {
   const ingredients = await getIngredientsModel();
 
+  // caso não haja ingredientes, é lançado um erro de not found
   if (!ingredients) throw errorHandling(notFound, "There is no ingredients");
 
   return ingredients;
