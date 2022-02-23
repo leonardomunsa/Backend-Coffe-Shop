@@ -8,7 +8,8 @@ const { created } = require("../utils/dictionary");
 
 const createUserController = async (req, res, next) => {
   try {
-    const userCreated = await createUserService(req.body);
+    const { name, email, password } = req.body;
+    const userCreated = await createUserService({ name, email, password });
 
     return res.status(created).json(userCreated);
   } catch (error) {
@@ -19,7 +20,8 @@ const createUserController = async (req, res, next) => {
 
 const loginUserController = async (req, res, next) => {
   try {
-    const token = await loginUserService(req.body);
+    const { email, password } = req.body;
+    const token = await loginUserService({ email, password });
 
     return res.status(created).json({ token });
   } catch (error) {

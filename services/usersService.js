@@ -1,3 +1,4 @@
+const md5 = require("md5");
 const authService = require("./authServices");
 const { findUserModel, createUserModel } = require("../models/usersModel");
 const { userSchema } = require("../utils/schemas");
@@ -11,7 +12,9 @@ const createUserService = async ({ name, email, password }) => {
   const user = await findUserModel(email);
   if (user) throw errorHandling(conflict, "User already exists");
 
-  const userId = await createUserModel({ name, email, password });
+  const hashPassword = md5(password);
+
+  const userId = await createUserModel(name, email, hashPassword);
 
   return {
     _id: userId,
@@ -26,7 +29,9 @@ const loginUserService = async ({ email, password }) => {
 
   const user = await findUserModel(email);
   if (!user) throw errorHandling(notFound, "User not found");
-  if (user.password !== password)
+
+  const hashPassword = md5(password);
+  if (user.password !== hashPassword)
     throw errorHandling(conflict, "Incorrect password");
 
   const { password: _password, ...userEmail } = user;

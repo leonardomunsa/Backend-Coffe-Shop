@@ -7,7 +7,7 @@ const findUserModel = async (email) => {
   return user;
 };
 
-const createUserModel = async ({ name, email, password }) => {
+const createUserModel = async (name, email, password) => {
   const db = await connection();
   const { insertedId } = await db
     .collection("users")
