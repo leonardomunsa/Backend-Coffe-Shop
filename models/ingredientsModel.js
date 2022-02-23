@@ -7,16 +7,11 @@ const findIngredientModel = async (name) => {
   return ingredient;
 };
 
-const createIngredientModel = async (
-  name,
-  quantity,
-  measurement,
-  unitPrice
-) => {
+const createIngredientModel = async (name, measurement, unitPrice) => {
   const db = await connection();
   const { insertedId } = await db
     .collection("ingredients")
-    .insertOne({ name, quantity, measurement, unitPrice });
+    .insertOne({ name, measurement, unitPrice });
 
   return insertedId;
 };

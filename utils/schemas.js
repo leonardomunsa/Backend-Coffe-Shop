@@ -15,7 +15,6 @@ const userSchema = Joi.object({
 
 const ingredientSchema = Joi.object({
   name: Joi.string().required().min(1),
-  quantity: Joi.number().required(),
   measurement: Joi.string().required().min(1),
   unitPrice: Joi.number().required(),
 });
