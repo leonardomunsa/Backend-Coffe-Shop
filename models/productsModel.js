@@ -85,8 +85,6 @@ const getImageProductModel = async (img) => {
   return image;
 };
 
-// const updateComponentsProductModel = async ()
-
 module.exports = {
   findProductModel,
   getProductModel,

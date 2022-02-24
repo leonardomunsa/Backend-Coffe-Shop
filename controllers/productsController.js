@@ -11,6 +11,7 @@ const {
 } = require("../services/productsService");
 const { created, success, noContent } = require("../utils/dictionary");
 
+// rota para busca de produto isolado, constando quantidades de ingrediente, viabilizando se pode ser vendido
 const getProductController = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -24,6 +25,7 @@ const getProductController = async (req, res, next) => {
   }
 };
 
+// rota para busca de todos os produtos, apresentando o estoque ao cliente
 const getProductsController = async (req, res, next) => {
   try {
     const products = await getProductsService();
