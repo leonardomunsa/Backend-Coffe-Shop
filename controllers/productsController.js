@@ -58,14 +58,14 @@ const updateProductController = async (req, res, next) => {
     const { id } = req.params;
     const { name, image, price, components } = req.body;
 
-    const productUpdated = await updateProductService(id, {
+    await updateProductService(id, {
       name,
       image,
       price,
       components,
     });
 
-    return res.status(success).json(productUpdated);
+    return res.status(success).json("Product updated");
   } catch (error) {
     console.log(`PUT PRODUCT -> ${error.message}`);
     next(error);

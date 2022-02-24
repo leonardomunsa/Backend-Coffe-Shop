@@ -41,14 +41,22 @@ const createProductModel = async ({ name, image, price, components }) => {
 
 const updateProductModel = async (id, { name, price, image, components }) => {
   const db = await connection();
-  const updatedProduct = await db
+  await db
     .collection("products")
     .updateOne(
       { _id: new ObjectId(id) },
       { $set: { name, price, image }, $push: { components } }
     );
+};
 
-  return updatedProduct;
+const updateProductModelWithoutComponents = async (
+  id,
+  { name, price, image }
+) => {
+  const db = await connection();
+  await db
+    .collection("products")
+    .updateOne({ _id: new ObjectId(id) }, { $set: { name, price, image } });
 };
 
 const deleteProductModel = async (id) => {
@@ -77,12 +85,15 @@ const getImageProductModel = async (img) => {
   return image;
 };
 
+// const updateComponentsProductModel = async ()
+
 module.exports = {
   findProductModel,
   getProductModel,
   getProductsModel,
   createProductModel,
   updateProductModel,
+  updateProductModelWithoutComponents,
   deleteProductModel,
   uploadImageProductModel,
   getImageProductModel,

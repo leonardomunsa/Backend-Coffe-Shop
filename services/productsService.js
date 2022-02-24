@@ -7,6 +7,7 @@ const {
   deleteProductModel,
   uploadImageProductModel,
   getImageProductModel,
+  updateProductModelWithoutComponents,
 } = require("../models/productsModel");
 const { productSchema, productSchemaUpdate } = require("../utils/schemas");
 const errorHandling = require("../utils/errorHandling");
@@ -61,15 +62,24 @@ const updateProductService = async (id, { name, image, price, components }) => {
   const productToUpdate = await getProductModel(id);
   if (!productToUpdate) throw errorHandling(notFound, "Product not found");
 
-  // preenchendo campos com valores já existentes do produto caso sejam nulos
-  const updatedProduct = await updateProductModel(id, {
+  // caso o campo components esteja presente, será chamada função da camada modelo
+  // que utiliza esse campo para inclusão de novo ingrediente no array
+  if (components) {
+    await updateProductModel(id, {
+      name: name || productToUpdate.name,
+      image: image || productToUpdate.image,
+      price: price || productToUpdate.price,
+      components,
+    });
+  }
+
+  // caso o campo não esteja presente, são usados apenas os outros campos
+  // se esses campos estiverem ausentes (forem nulos), utiliza-se o campo padrão do produto
+  await updateProductModelWithoutComponents(id, {
     name: name || productToUpdate.name,
     image: image || productToUpdate.image,
     price: price || productToUpdate.price,
-    components: components || productToUpdate.components,
   });
-
-  return updatedProduct;
 };
 
 const deleteProductService = async (id) => {
