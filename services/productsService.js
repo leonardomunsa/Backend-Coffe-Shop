@@ -5,6 +5,8 @@ const {
   findProductModel,
   updateProductModel,
   deleteProductModel,
+  uploadImageProductModel,
+  getImageProductModel,
 } = require("../models/productsModel");
 const { productSchema, productSchemaUpdate } = require("../utils/schemas");
 const errorHandling = require("../utils/errorHandling");
@@ -74,10 +76,29 @@ const deleteProductService = async (id) => {
   await deleteProductModel(id);
 };
 
+const uploadImageProductService = async (id, img) => {
+  if (!img.match(/\.(jpg|png|JPG|PNG)$/))
+    throw errorHandling(badRequest, "Image must be jpg or png");
+
+  await uploadImageProductModel(id, img);
+
+  const { image } = await getProductModel(id);
+
+  return image;
+};
+
+const getImageProductService = async (img) => {
+  const image = await getImageProductModel(img);
+
+  return image;
+};
+
 module.exports = {
   getProductService,
   getProductsService,
   createProductService,
   updateProductService,
   deleteProductService,
+  uploadImageProductService,
+  getImageProductService,
 };

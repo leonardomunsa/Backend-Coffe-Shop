@@ -1,5 +1,8 @@
+require("dotenv").config();
 const { ObjectId } = require("mongodb");
 const connection = require("./connection");
+
+const { PORT } = process.env;
 
 const findProductModel = async (name) => {
   const db = await connection();
@@ -53,6 +56,27 @@ const deleteProductModel = async (id) => {
   await db.collection("products").deleteOne({ _id: new ObjectId(id) });
 };
 
+const uploadImageProductModel = async (id, img) => {
+  const db = await connection();
+  await db.collection("products").updateOne(
+    {
+      _id: new ObjectId(id),
+    },
+    {
+      $set: { image: `localhost:${PORT}/uploads/${img}` },
+    }
+  );
+};
+
+const getImageProductModel = async (img) => {
+  const db = await connection();
+  const image = db
+    .collection("products")
+    .findOne({ image: `localhost:${PORT}/uploads/${img}` });
+
+  return image;
+};
+
 module.exports = {
   findProductModel,
   getProductModel,
@@ -60,4 +84,6 @@ module.exports = {
   createProductModel,
   updateProductModel,
   deleteProductModel,
+  uploadImageProductModel,
+  getImageProductModel,
 };
