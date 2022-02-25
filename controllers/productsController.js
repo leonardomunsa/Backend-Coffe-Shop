@@ -7,7 +7,6 @@ const {
   updateProductService,
   deleteProductService,
   uploadImageProductService,
-  getImageProductService,
   getPriceOfProductService,
 } = require("../services/productsService");
 const { created, success, noContent } = require("../utils/dictionary");
@@ -81,7 +80,7 @@ const deleteProductController = async (req, res, next) => {
 
     await deleteProductService(id);
 
-    return res.status(noContent).json();
+    return res.status(noContent).json("Product deleted successfully");
   } catch (error) {
     console.log(`DELETE PRODUCT -> ${error.message}`);
     next(error);
@@ -102,24 +101,11 @@ const uploadImageProductController = async (req, res, next) => {
   }
 };
 
-const getImageProductController = async (req, res, next) => {
-  try {
-    const { img } = req.params;
-
-    const image = await getImageProductService(img);
-
-    return res.status(success).json(image);
-  } catch (error) {
-    console.log(`GET IMAGE -> ${error.message}`);
-    next(error);
-  }
-};
-
 const getPriceOfProductController = async (req, res, next) => {
   try {
-    const teste = await getPriceOfProductService();
+    const price = await getPriceOfProductService();
 
-    return res.status(success).json(teste);
+    return res.status(success).json(price);
   } catch (error) {
     console.log(`GET PRICE -> ${error.message}`);
     next(error);
@@ -133,6 +119,5 @@ module.exports = {
   updateProductController,
   deleteProductController,
   uploadImageProductController,
-  getImageProductController,
   getPriceOfProductController,
 };

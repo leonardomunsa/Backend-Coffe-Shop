@@ -42,6 +42,7 @@ const loginUserService = async ({ email, password }) => {
 
   const token = authService.generateToken(userInfosWithoutPassword);
 
+  // envio de token ao usuário para armazenamento nos headers de autenticação
   return token;
 };
 

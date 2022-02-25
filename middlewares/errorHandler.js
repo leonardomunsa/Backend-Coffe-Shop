@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-// função para lidar com erros
+
+// middleware para lidar com erros que surgem em alguma função ao longo da aplicação
 module.exports = (err, _req, res, _next) => {
   if (err.status) {
     return res.status(err.status).json({ message: err.message });

@@ -4,6 +4,8 @@ const connection = require("./connection");
 
 const { PORT } = process.env;
 
+// documento de camada modelo para funções de contato com o banco de dados relacionadas aos produtos
+
 const findProductModel = async (name) => {
   const db = await connection();
   const product = await db.collection("products").findOne({ name });
@@ -39,6 +41,7 @@ const createProductModel = async ({ name, image, price, components }) => {
   return insertedId;
 };
 
+// função para uso de atualização em caso do campo components existir na requisição
 const updateProductModel = async (id, { name, price, image, components }) => {
   const db = await connection();
   await db
@@ -49,6 +52,7 @@ const updateProductModel = async (id, { name, price, image, components }) => {
     );
 };
 
+// função que não utiliza campo components, para que não haja necessidade de adicionar um array ao campo
 const updateProductModelWithoutComponents = async (
   id,
   { name, price, image }
@@ -74,15 +78,6 @@ const uploadImageProductModel = async (id, img) => {
       $set: { image: `localhost:${PORT}/uploads/${img}` },
     }
   );
-};
-
-const getImageProductModel = async (img) => {
-  const db = await connection();
-  const image = db
-    .collection("products")
-    .findOne({ image: `localhost:${PORT}/uploads/${img}` });
-
-  return image;
 };
 
 // função para busca de preço do produto, utilizando aggregations no mongodb, abaixo link que me auxiliou
@@ -155,6 +150,5 @@ module.exports = {
   updateProductModelWithoutComponents,
   deleteProductModel,
   uploadImageProductModel,
-  getImageProductModel,
   getPriceOfProductModel,
 };

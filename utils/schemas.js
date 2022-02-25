@@ -19,7 +19,7 @@ const ingredientSchema = Joi.object({
   unitPrice: Joi.number().required().min(0.1),
 });
 
-// validação de produto, com chave de componente sendo um array de objetos de ingredientes com quantidadee
+// validação de produto, com chave de componente sendo um array de objetos de ingredientes com quantidade
 const productSchema = Joi.object({
   name: Joi.string().required().min(1),
   image: Joi.string().min(1),

@@ -8,7 +8,6 @@ const {
   updateProductController,
   deleteProductController,
   uploadImageProductController,
-  getImageProductController,
   getPriceOfProductController,
 } = require("../controllers/productsController");
 const auth = require("../middlewares/auth");
@@ -20,17 +19,18 @@ productRouter.use(
   express.static(path.join(__dirname, "..", "uploads"))
 );
 
+// rotas relacionadas aos produtos, com middleware de autenticação para controle
 productRouter.post("/", auth, createProductController);
 productRouter.get("/", getProductsController);
-productRouter.get("/price", getPriceOfProductController);
+productRouter.get("/price", auth, getPriceOfProductController);
 productRouter.put("/:id", auth, updateProductController);
 productRouter.delete("/:id", auth, deleteProductController);
 productRouter.get("/:id", auth, getProductController);
 productRouter.put(
   "/:id/image",
+  auth,
   uploadImg.single("image"),
   uploadImageProductController
 );
-productRouter.get("/images/:img", getImageProductController);
 
 module.exports = productRouter;

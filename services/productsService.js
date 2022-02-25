@@ -6,13 +6,16 @@ const {
   updateProductModel,
   deleteProductModel,
   uploadImageProductModel,
-  getImageProductModel,
   updateProductModelWithoutComponents,
   getPriceOfProductModel,
 } = require("../models/productsModel");
 const { productSchema, productSchemaUpdate } = require("../utils/schemas");
 const errorHandling = require("../utils/errorHandling");
 const { badRequest, notFound, conflict } = require("../utils/dictionary");
+
+// documento de camada de serviços para funções relacionadas aos produtos
+// camada essa que é encarregada das validações do que vem pelo controle (requisições)
+// entregando tudo ok para a camada modelo
 
 const getProductService = async (id) => {
   const product = await getProductModel(id);
@@ -88,6 +91,7 @@ const deleteProductService = async (id) => {
 };
 
 const uploadImageProductService = async (id, img) => {
+  // regex para checar se a imagem upada está no formato requerido
   if (!img.match(/\.(jpg|png|JPG|PNG)$/))
     throw errorHandling(badRequest, "Image must be jpg or png");
 
@@ -98,16 +102,10 @@ const uploadImageProductService = async (id, img) => {
   return image;
 };
 
-const getImageProductService = async (img) => {
-  const image = await getImageProductModel(img);
-
-  return image;
-};
-
 const getPriceOfProductService = async () => {
-  const teste = await getPriceOfProductModel();
+  const price = await getPriceOfProductModel();
 
-  return teste;
+  return price;
 };
 
 module.exports = {
@@ -117,6 +115,5 @@ module.exports = {
   updateProductService,
   deleteProductService,
   uploadImageProductService,
-  getImageProductService,
   getPriceOfProductService,
 };
