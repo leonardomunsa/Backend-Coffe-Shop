@@ -1,6 +1,6 @@
 ## Aplicação back end para controle de estoque
 
-Uma aplicação back end para controle de estoque de loja, onde é possível:
+Uma aplicação back end para controle de estoque de cafeteria, onde é possível:
 - Criar ingredientes
 - Buscar ingredientes
 - Criar produtos
