@@ -85,6 +85,67 @@ const getImageProductModel = async (img) => {
   return image;
 };
 
+// função para busca de preço do produto, utilizando aggregations no mongodb, abaixo link que me auxiliou
+// no cálculo para o preço do produto
+// https://stackoverflow.com/questions/52274806/mongodb-multiply-values-inside-two-arrays
+const getPriceOfProductModel = async () => {
+  const db = await connection();
+  const price = db
+    .collection("products")
+    .aggregate([
+      {
+        $lookup: {
+          from: "ingredients",
+          let: { ingrediente: "$components.ingredient" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$name", "$$ingrediente"],
+                },
+              },
+            },
+          ],
+          as: "ingredientsData",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          name: 1,
+          price: {
+            $sum: {
+              $map: {
+                input: { $range: [0, { $size: "$components" }] },
+                as: "ix",
+                in: {
+                  $let: {
+                    vars: {
+                      pre: { $arrayElemAt: ["$components", "$$ix"] },
+                      cal: {
+                        $arrayElemAt: ["$ingredientsData", "$$ix"],
+                      },
+                    },
+                    in: { $multiply: ["$$pre.quantity", "$$cal.unitPrice"] },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          priceOfProduct: { $round: ["$price", 2] },
+        },
+      },
+    ])
+    .toArray();
+
+  return price;
+};
+
 module.exports = {
   findProductModel,
   getProductModel,
@@ -95,4 +156,5 @@ module.exports = {
   deleteProductModel,
   uploadImageProductModel,
   getImageProductModel,
+  getPriceOfProductModel,
 };

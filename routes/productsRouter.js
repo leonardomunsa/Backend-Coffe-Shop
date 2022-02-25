@@ -9,6 +9,7 @@ const {
   deleteProductController,
   uploadImageProductController,
   getImageProductController,
+  getPriceOfProductController,
 } = require("../controllers/productsController");
 const auth = require("../middlewares/auth");
 
@@ -21,9 +22,10 @@ productRouter.use(
 
 productRouter.post("/", auth, createProductController);
 productRouter.get("/", getProductsController);
+productRouter.get("/price", getPriceOfProductController);
 productRouter.put("/:id", auth, updateProductController);
 productRouter.delete("/:id", auth, deleteProductController);
-productRouter.get("/:id", getProductController);
+productRouter.get("/:id", auth, getProductController);
 productRouter.put(
   "/:id/image",
   uploadImg.single("image"),

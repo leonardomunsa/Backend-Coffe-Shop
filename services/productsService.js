@@ -8,6 +8,7 @@ const {
   uploadImageProductModel,
   getImageProductModel,
   updateProductModelWithoutComponents,
+  getPriceOfProductModel,
 } = require("../models/productsModel");
 const { productSchema, productSchemaUpdate } = require("../utils/schemas");
 const errorHandling = require("../utils/errorHandling");
@@ -103,6 +104,12 @@ const getImageProductService = async (img) => {
   return image;
 };
 
+const getPriceOfProductService = async () => {
+  const teste = await getPriceOfProductModel();
+
+  return teste;
+};
+
 module.exports = {
   getProductService,
   getProductsService,
@@ -111,4 +118,5 @@ module.exports = {
   deleteProductService,
   uploadImageProductService,
   getImageProductService,
+  getPriceOfProductService,
 };

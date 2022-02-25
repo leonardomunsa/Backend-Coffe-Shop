@@ -8,6 +8,7 @@ const {
   deleteProductService,
   uploadImageProductService,
   getImageProductService,
+  getPriceOfProductService,
 } = require("../services/productsService");
 const { created, success, noContent } = require("../utils/dictionary");
 
@@ -114,6 +115,17 @@ const getImageProductController = async (req, res, next) => {
   }
 };
 
+const getPriceOfProductController = async (req, res, next) => {
+  try {
+    const teste = await getPriceOfProductService();
+
+    return res.status(success).json(teste);
+  } catch (error) {
+    console.log(`GET PRICE -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   getProductController,
   getProductsController,
@@ -122,4 +134,5 @@ module.exports = {
   deleteProductController,
   uploadImageProductController,
   getImageProductController,
+  getPriceOfProductController,
 };

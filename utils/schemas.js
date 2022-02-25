@@ -23,7 +23,7 @@ const ingredientSchema = Joi.object({
 const productSchema = Joi.object({
   name: Joi.string().required().min(1),
   image: Joi.string().min(1),
-  price: Joi.number().min(0.1).required(),
+  price: Joi.number().min(0.1),
   components: Joi.array().items(
     Joi.object().keys({
       ingredient: Joi.string().required().min(1),
