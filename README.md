@@ -21,13 +21,17 @@ Foram usadas as tecnologias:
 - Thunder Client
 - Nodemon
 
+## Requisito para rodar o projeto
+
+- Node JS instalado
+
 ## Como clonar o repositório e testar o projeto
 
 Clone o projeto do Github :
 
 ```sh
 $ git clone git@github.com:leonardomunsa/desafio-backend.git or git clone https://github.com/leonardomunsa/desafio-backend.git
-$ cd desafio-backend
+$ cd desafio-backend-profranchising
 ```
 
 #### Para que o banco de dados funcione:
