@@ -56,6 +56,6 @@ http://localhost:3000
 Teste para ver se está correto, adicione ingredientes ao bando de dados e entre no link http://localhost:3000/ingredients,
 o resultado deve ser algo parecido com a imagem abaixo:
 
-
+![dddd](https://user-images.githubusercontent.com/61881081/155654829-6f66d8ad-4335-426b-bcfd-db7eb24e6f58.png)
 
 Uma lista de ingredientes salvos no banco de dados.
