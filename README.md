@@ -30,8 +30,8 @@ Foram usadas as tecnologias:
 Clone o projeto do Github :
 
 ```sh
-$ git clone git@github.com:leonardomunsa/desafio-backend.git or git clone https://github.com/leonardomunsa/desafio-backend.git
-$ cd desafio-backend-profranchising
+$ git clone git@github.com:leonardomunsa/Backend-Coffee-Shop.git or git clone https://github.com/leonardomunsa/Backend-Coffee-Shop.git
+$ cd Backend-Coffee-Shop
 ```
 
 #### Para que o banco de dados funcione:
